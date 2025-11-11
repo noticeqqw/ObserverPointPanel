@@ -77,7 +77,7 @@ public class Main {
             return;
         }
 
-        JFrame frame = new JFrame("📊 Панель Точек");
+        JFrame frame = new JFrame("Панель Точек");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -116,6 +116,6 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        System.out.println("Панель точек запущена!✅");
+        System.out.println("Панель точек запущена!");
     }
 }
