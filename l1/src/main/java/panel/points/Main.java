@@ -3,20 +3,14 @@ package panel.points;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Главный класс приложения.
- * Демонстрирует работу PointsPanel с паттерном Observer/Observable.
- */
 public class Main {
     public static void main(String[] args) {
-        // Запускаем GUI в потоке событий Swing
         SwingUtilities.invokeLater(() -> {
             createAndShowGUI();
         });
     }
 
     private static void createAndShowGUI() {
-        // Создаем диалог для ввода параметров
         JPanel inputPanel = new JPanel(new GridLayout(7, 2, 5, 5));
 
         JTextField widthField = new JTextField("600");
@@ -50,7 +44,6 @@ public class Main {
             return;
         }
 
-        // Получаем значения из полей
         int width, height, maxPoints;
         double minX, maxX, minY, maxY;
 
@@ -84,36 +77,27 @@ public class Main {
             return;
         }
 
-        // Создаем главное окно
         JFrame frame = new JFrame("📊 Панель Точек");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        // Создаем панель для отображения точек с введенными параметрами
         PointsPanel pointsPanel = new PointsPanel(width, height, minX, maxX, minY, maxY, maxPoints);
 
-        // Создаем генератор данных (Observable) с введенным диапазоном
         Observable generator = new Observable(minX, maxX, minY, maxY);
 
-        // Подписываем панель на генератор
         generator.addObserver(pointsPanel);
 
-        // Добавляем панель на окно
         frame.add(pointsPanel, BorderLayout.CENTER);
 
-        // Создаем панель управления
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new FlowLayout());
 
-        // Кнопка для генерации одной точки
         JButton generateButton = new JButton("Сгенерировать точку");
         generateButton.addActionListener(e -> generator.generatePoint());
         controlPanel.add(generateButton);
 
-        // Создаем таймер для автоматической генерации точек
         Timer timer = new Timer(1000, e -> generator.generatePoint());
 
-        // Кнопка для запуска/остановки автоматической генерации
         JToggleButton autoGenerateButton = new JToggleButton("Запустить автогенерацию");
         autoGenerateButton.addActionListener(e -> {
             if (autoGenerateButton.isSelected()) {
@@ -128,7 +112,6 @@ public class Main {
 
         frame.add(controlPanel, BorderLayout.SOUTH);
 
-        // Настраиваем и показываем окно
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
